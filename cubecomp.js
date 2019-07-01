@@ -1,99 +1,31 @@
 console.clear()
 const fetch = require("node-fetch");
-var url = 'https://m.cubecomps.com/api/v1/competitions/';
-var theComp = 'Altai Special';
-var competitor = 'Artem Kuminov'
-
-/*
-
-var testThis = $.ajax({
-        url: 'https://m.cubecomps.com/api/v1/competitions',
-        success: function(comp)
-        {
-
-            var theComp = 'Medan Farewell';
-//var ongoing = comp.in_progress.find(theComp);
-
-            for(var i = 0; i < comp.in_progress.length; i++)
-            {
-              if(comp.in_progress[i].name == theComp)
-              {
-                var compID = comp.in_progress[i].id;
-                var compName = comp.in_progress[i].name;
-//console.log('I SHIT MY OWN PANTS at competition: '+compID);
-//console.log('I SHIT MY OWN PANTS at competition: '+compName);
-//console.log(comp.in_progress[i]);
-                                    return compID;
-              }
-            }
-
-        }
-
-
-//        beforeSend: function(xhr) {
-//             //xhr.setRequestHeader("Authorization", "Bearer 6QXNMEMFHNY4FJ5ELNFMP5KRW52WFXN5")
-//        }, success: function(data){
-//            //alert(data);
-//            //process the JSON data etc
-//        }
-
-
-})
-
-
-
-console.log('--------------------------');
-console.log(testThis.compID);
-console.log('--------------------------');
-*/
-
-
-//////////////////////////////////////
-//////////////////////////////////////
-/*
-var opts = {
-  method: 'GET',      
-  headers: {}
-};
-fetch('/get-data', opts).then(function (response) {
-  return response.json();
-})
-.then(function (body) {
-//doSomething with body;
-});
-
-
-
-var opts = {
-  method: 'GET',      
-  headers: {}
-};
-fetch(url, opts).then(function (response) {
-  return response.json();
-})
-.then(function (body) {
-//doSomething with body;
-});
-
-console.log(opts[0])
-*/
-
+const url = 'https://m.cubecomps.com/api/v1/competitions/';
+const compName = 'Altai Special';
+const competitor = 'Artem Kuminov'
 
 //GET ACTIVE COMPS
-var TheComps = fetch(url)
+var compNames = fetch(url)
   .then(function(response)
     {
+    console.log('GOT COMPS');
     return response.json();
-    })
+    }).then(function(comps)
+      {
+      console.log('comps');
+      //  console.log(comps);
+      checkRunningComp(comps);
+      });
 
 //LOOK FOR OUR COMP
+/*
   .then(function(comps)
     {
 
     var complen = comps.in_progress.length;
     console.log(complen);
 
-    // Check if any competition is taking place, exit if not
+// Check if any competition is taking place, exit if not
     if (complen == 0)
     {
       console.log('None in progress...');
@@ -103,11 +35,11 @@ var TheComps = fetch(url)
     {
       for(var i = 0; i < comps.in_progress.length; i++)
       {
-        if(comps.in_progress[i].name == theComp)
+        if(comps.in_progress[i].name == compName)
         {
           var compID = comps.in_progress[i].id;
           var compName = comps.in_progress[i].name;
-          //console.log(compID);
+//console.log(compID);
           console.log(compName);
           return compID;
         }
@@ -115,7 +47,7 @@ var TheComps = fetch(url)
     }
     })
 
-  // GET OUR COMPETITION INFORMATION
+// GET OUR COMPETITION INFORMATION
   .then(function(ourCompID)
     {
     console.log('ourCompID');
@@ -127,10 +59,10 @@ var TheComps = fetch(url)
         })
       .then(function(ourComp)
         {
+        getCompetitorInfo(ourComp);
+//SPLIT THIS PART OFF SO WE DON'T HAVE TO KEEP CHECKING THE COMPETITION
 
-        //SPLIT THIS PART OFF SO WE DON'T HAVE TO KEEP CHECKING THE COMPETITION
-
-        // GET OUR COMPETITOR INFORMATION
+// GET OUR COMPETITOR INFORMATION
         for(var i = 0; i < ourComp.competitors.length; i++)
         {
           if(ourComp.competitors[i].name == competitor)
@@ -151,7 +83,7 @@ var TheComps = fetch(url)
 
         console.log(competitorID); 
 
-        // GET THE COMPETITOR'S CURRENT STATUS
+// GET THE COMPETITOR'S CURRENT STATUS
         fetch(url+ourCompID+'/competitors/'+competitorID)
           .then(function(response)
             {
@@ -162,39 +94,41 @@ var TheComps = fetch(url)
             {
             console.log(results);
             })
-        //https://m.cubecomps.com/api/v1/competitions/1094/competitors/43
+//https://m.cubecomps.com/api/v1/competitions/1094/competitors/43
 
 
         })
     })
-
+  */
+var checkRunningComp = function(comps)
+{
+  //LOOK FOR OUR COMP
+  var complen = comps.in_progress.length;
+  console.log('complen is: '+complen);
+  compID(comps);
+  if(complen === 1)
+  {
+    getCompID(comps); 
+  }
+  else
+  {
+    console.log(compName + ' is not taking place right now.');
+  }
+}
+var compID = (comps) => 
+{
+  for(var i = 0; i < comps.in_progress.length; i++)
+  {
+    if(comps.in_progress[i].name == compName)
+    {
+      const compID = comps.in_progress[i].id;
+      return compID;
+    }
+  }
+}
+function checkRunningComps()
+{
+}
 function getCompetitorInfo(info)
 {
 }
-/*
-console.log(comps);
-
-console.log('----------------------');
-console.log('----------------------');
-console.log('');
-console.log('----------------------');
-//console.log(comps.in_progress[1]);
-console.log('----------------------');
-console.log('----------------------');
-*/
-
-/*
-
-            for(var i = 0; i < comps.in_progress.length; i++)
-            {
-              if(comps.in_progress[i].name == theComp)
-              {
-                var compID = comp.in_progress[i].id;
-                var compName = comp.in_progress[i].name;
-//console.log('I SHIT MY OWN PANTS at competition: '+compID);
-//console.log('I SHIT MY OWN PANTS at competition: '+compName);
-//console.log(comp.in_progress[i]);
-              }
-            }
-
-*/
