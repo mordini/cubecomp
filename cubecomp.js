@@ -37,11 +37,11 @@ var compNames = fetch(url)
       {
         if(comps.in_progress[i].name == compName)
         {
-          var compID = comps.in_progress[i].id;
+          var competitionID = comps.in_progress[i].id;
           var compName = comps.in_progress[i].name;
-//console.log(compID);
+//console.log(competitionID);
           console.log(compName);
-          return compID;
+          return competitionID;
         }
       }
     }
@@ -105,7 +105,7 @@ var checkRunningComp = function(comps)
   //LOOK FOR OUR COMP
   var complen = comps.in_progress.length;
   console.log('complen is: '+complen);
-  compID(comps);
+  competitionID(comps);
   if(complen === 1)
   {
     getCompID(comps); 
@@ -115,20 +115,46 @@ var checkRunningComp = function(comps)
     console.log(compName + ' is not taking place right now.');
   }
 }
-var compID = (comps) => 
+
+// Get Comp ID
+var competitionID = (comps) => 
 {
   for(var i = 0; i < comps.in_progress.length; i++)
   {
     if(comps.in_progress[i].name == compName)
     {
-      const compID = comps.in_progress[i].id;
-      return compID;
+      const competitionID = comps.in_progress[i].id;
+      return competitionID;
     }
   }
 }
-function checkRunningComps()
+
+// GET THE COMPETITOR'S ID
+var competitorID = (competitionID) =>
+        for(var i = 0; i < ourComp.competitors.length; i++)
+        {
+          if(ourComp.competitors[i].name == competitor)
+          {
+            console.log(competitor);
+            var competitorID = ourComp.competitors[i].id;
+            console.log(competitorID);
+            return competitorID;
+
+          }
+        }    
+
+// GET THE COMPETITOR'S CURRENT STATUS
+var competitorID = (competitionID) =>
 {
-}
-function getCompetitorInfo(info)
-{
+  fetch(url+ourCompID+'/competitors/'+competitorID)
+    .then(function(response)
+      {
+      console.log(response);
+      return response.json()
+      })
+    .then(function(results)
+      {
+      console.log(results);
+      })
+  //https://m.cubecomps.com/api/v1/competitions/1094/competitors/43
 }
