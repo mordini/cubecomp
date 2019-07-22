@@ -50,8 +50,14 @@ var competition_2 = {
     competition2().then(compsPresent => {
       comps = compsPresent;
       console.log('check present comps man');
-      console.log(comps.in_progress);
-      return comps.in_progress;
+      console.log(comps.in_progress.length);
+      if(comps.in_progress.length === 0) {
+        console.log('no competitions are taking place right now'); 
+      } else {
+        console.log('found comps');
+        console.log(comps.in_progress);
+        return comps.in_progress;
+      }
     });
   },
 
@@ -60,14 +66,13 @@ var competition_2 = {
 
   },
 
-  find: function(comp) {
+  find: function(comp_input) {
     //take comp as string
     let comps;
     //get comps
     competition2().then(compsPresent => {
       comps = compsPresent;
       console.log('got comps for find function');
-      //console.log(comps.in_progress);
       //Object.keys(comps).forEach(function(value,key,map){
       //console.log(comps.in_progress);
       //console.log(comps.length);
@@ -87,35 +92,30 @@ var competition_2 = {
         //console.log(key[0][0].name);
         for(n in comps[i]) {
           //console.log(comps[i][n].name); 
-          if(comps[i][n].name === comp) {
-            console.log(comp + ' is in the list, under "' + i +'" !');  
-            console.log(comps[i][n]);
+          var regex = new RegExp('^.*' + comp_input + '.*$', 'i');
+          let comp_name = comps[i][n].name;
+          var result = regex.test(comp_name);
+          console.log(regex);
+          console.log(comp_name);
+          console.log(result);
+          //if(comp_name === comp_input) {
+          // TO DO: MAKE IT HAVE MULTIPLE RESULTS ADDED TO NEW ARRAY
+          if(result === true) {
+            console.log(comp_input + ' is in the list, under "' + i +'" !');  
+            console.log(comp_name);
             //console.log(Object.getOwnPropertyNames(comps)[0]);
             //console.log(comps[i]);
             console.log(comps[i][n].id);
             return comps[i][n].id;
           };
         };
-        //for (var i = 0; i < value.length; i++) {
-        /*
-          if (comps[i].name == comp) {
-            var competitionID = comps.[i].id;
-            var compName = comps.[i].name;
-            console.log(competitionID);
-            console.log(compName);
-            return competitionID;
-          }
-          */
-
-      };//);
+      };
 
     }).catch((error) => {
       console.log('ERROR: ' + error); 
     });
     //go through list
     //console.log(comps.length);
-
-
 
     /*
     for (var i = 0; i < comps.length; i++) {
@@ -135,7 +135,8 @@ var competition_2 = {
 //console.log(competition_2);
 //console.log(typeof competition_2);
 //competition_2.past();
-competition_2.find('Gold Coast Spring');
+competition_2.find('spring');
+competition_2.in_progress();
 
 // WORKING!
 async function competition2() {
@@ -149,7 +150,6 @@ async function competition2() {
   }
 }
 
-
 async function past() {
   console.log('past');
   let comps;
@@ -157,9 +157,6 @@ async function past() {
     comps = compsPast;
     console.log('check my comps man');
     console.log(comps);
-    //comps = compsPast;
-    //console.log('past got comps');
-    //console.log(comps);
   });
 }
 // END WORKING!
