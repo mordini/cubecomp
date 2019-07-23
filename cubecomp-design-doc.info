@@ -1,0 +1,33 @@
+What does it do?
+
+This software is so we can follow people at competitions in a more convenient way.
+It will be put into nibblrjr, who will announce event/competitor progress as
+it unfolds.
+
+
+1.  Track competitors progress during a specific comp
+2.  Track competitions (overall)
+3.  Track competitor stats (did they get a new PB?  what's the best/worst?)
+4.  
+5.
+6.
+7.
+8.
+9.
+10.
+
+To Do:
+Get List of competitions - Done
+Create "Find" function for competitions - DONE
+       Competition searches should not have to be exact.  e.g. Big Old Competition should be found from 'big old' or 'big comp' -DONE
+Create "Find" function for competitors
+       Competitor searches should not have to be exact.  same thing.
+Get Competitor Status
+    Present Competitor Status
+Get Competition Status (e.g. what event, how far along, etc)
+
+
+Consider:
+present options if multiples are found, or make them be more precise?  (
+EXample, "open" search will yield many results)
+lis 

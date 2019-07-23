@@ -73,23 +73,8 @@ var competition_2 = {
     competition2().then(compsPresent => {
       comps = compsPresent;
       console.log('got comps for find function');
-      //Object.keys(comps).forEach(function(value,key,map){
-      //console.log(comps.in_progress);
-      //console.log(comps.length);
-      //for(let i = 0; i < comps.length; i++) {
       console.log(Object.getOwnPropertyNames(comps));
       for(i in comps) {
-        //console.log(comps);
-        //console.log(`KEY: [${key}] = VALUE: ${value}`);
-        //console.log(comps[i][0].name);
-        //console.log(comps.past.length);
-        //console.log(typeof value);
-        //console.log(typeof key);
-        //console.log(typeof map);
-        //console.info(map);
-        //console.log(map.value);
-        //console.log(comps[value]);
-        //console.log(key[0][0].name);
         for(n in comps[i]) {
           //console.log(comps[i][n].name); 
           var regex = new RegExp('^.*' + comp_input + '.*$', 'i');
@@ -114,22 +99,6 @@ var competition_2 = {
     }).catch((error) => {
       console.log('ERROR: ' + error); 
     });
-    //go through list
-    //console.log(comps.length);
-
-    /*
-    for (var i = 0; i < comps.length; i++) {
-      if (comps[i].name == compName) {
-        var competitionID = comps.[i].id;
-        var compName = comps.[i].name;
-        console.log(competitionID);
-        console.log(compName);
-        return competitionID;
-      }
-    //if comp do something
-    //if doesn't exist, what are you thinking?
-    //consider using "like"
-    */
   }
 }
 //console.log(competition_2);
