@@ -1,60 +1,69 @@
 console.clear()
 const fetch = require("node-fetch");
-const url = 'https://m.cubecomps.com/api/v1/competitions/';
+//const url = 'https://m.cubecomps.com/api/v1/competitions/';
 const compName = 'Altai Special';
-const competitor = 'Artem Kuminov'
+const competitorName = 'Artem Kuminov';
 
-var testName =
-  {
-    test1: function () {
-      console.log('test1');
-      return 'butt';
-    },
-    test2: function () {
-      console.log('test2');
-      var test3 = this.test1();
-      console.log(test3);
-    }
+var competitor = {
 
+  //get competitors
+  retrieve: async function() {
+    // var comps = getComps();
   }
 
+  //find competitor by name
+  //get competition competitor
+
+}
+
+// COMPETITION FUNCTIONS
 var competition_2 = {
 
-  competition2: async function() {
-    console.log('Getting comps');
+  retrieve: async function() {
+    console.log('Getting Competitions');
+    const url = 'https://m.cubecomps.com/api/v1/competitions/';
+    
     try {
       const result = await fetch(url)
-      const data = result.json();
+      const data = await result.json();
       return data;
     } catch(error) {
       console.log('error: ' + error); 
     }
+
   },
 
   past: async function() {
-    console.log('past');
+    console.log('Past');
     let comps;
-    competition2().then(compsPast => {
-      comps = compsPast;
-      console.log('check past comps man');
+    this.retrieve().then(compsRes => {
+      comps = compsRes ;
+      console.log('Check Past Competitions');
       console.log(comps.past);
     });
   },
 
   upcoming: function() {
+    console.log('Upcoming');
+    let comps;
+    this.retrieve().then(compsRes => {
+      comps = compsRes;
+      console.log('Check Upcoming Competitions');
+      console.log(comps.upcoming);
+    });
   },
 
   in_progress: function() {
-    console.log('in progress');
+    console.log('In Progress');
     let comps;
-    competition2().then(compsPresent => {
+    this.retrieve().then(compsPresent => {
       comps = compsPresent;
-      console.log('check present comps man');
+      console.log('Checking In-Progress Competitions');
       console.log(comps.in_progress.length);
       if(comps.in_progress.length === 0) {
-        console.log('no competitions are taking place right now'); 
+        console.log('No competitions are taking place right now'); 
       } else {
-        console.log('found comps');
+        console.log('Competitions Taking Place');
         console.log(comps.in_progress);
         return comps.in_progress;
       }
@@ -62,53 +71,64 @@ var competition_2 = {
   },
 
   // use this to track a competition
-  trackComp: function() {
+  trackComp: function(id) {
 
   },
 
-  find: function(comp_input) {
+  find: function(compInput) {
     //take comp as string
     let comps;
+
+    // object to hold found competitions
+    var compList = new Map();
+
     //get comps
-    competition2().then(compsPresent => {
-      comps = compsPresent;
-      console.log('got comps for find function');
+    this.retrieve().then(compsRes => {
+      comps = compsRes;
+
       console.log(Object.getOwnPropertyNames(comps));
+
+      // Iterate through ALL comps
       for(i in comps) {
         for(n in comps[i]) {
-          //console.log(comps[i][n].name); 
-          var regex = new RegExp('^.*' + comp_input + '.*$', 'i');
-          let comp_name = comps[i][n].name;
-          var result = regex.test(comp_name);
-          console.log(regex);
-          console.log(comp_name);
-          console.log(result);
-          //if(comp_name === comp_input) {
+          var regex = new RegExp('^.*' + compInput + '.*$', 'i');
+          let compName = comps[i][n].name;
+          let compId = comps[i][n].id;
+          var result = regex.test(compName);
+
           // TO DO: MAKE IT HAVE MULTIPLE RESULTS ADDED TO NEW ARRAY
           if(result === true) {
-            console.log(comp_input + ' is in the list, under "' + i +'" !');  
-            console.log(comp_name);
+            console.log(compInput + ' is in the list, under "' + i +'" !');  
+            console.log(compName);
             //console.log(Object.getOwnPropertyNames(comps)[0]);
             //console.log(comps[i]);
-            console.log(comps[i][n].id);
-            return comps[i][n].id;
+            console.log(compId);
+            compList.set(compId, compName);
+           // return compId;
           };
         };
       };
-
+    console.log(compList);
     }).catch((error) => {
       console.log('ERROR: ' + error); 
     });
   }
 }
+//TESTING GROUNDS
 //console.log(competition_2);
 //console.log(typeof competition_2);
 //competition_2.past();
-competition_2.find('spring');
-competition_2.in_progress();
+//competition_2.find('spring');
+competition_2.find('uk');
+//competition_2.in_progress();
+//competition_2.upcoming();
+//competitor.retrieve();
+//competition_2.retrieve();
+//END TESTING GROUNDS
 
+/*
 // WORKING!
-async function competition2() {
+async function competition2_OLD() {
   console.log('Getting comps');
   try {
     const result = await fetch(url)
@@ -119,7 +139,7 @@ async function competition2() {
   }
 }
 
-async function past() {
+async function past_OLD() {
   console.log('past');
   let comps;
   competition2().then(compsPast => {
@@ -129,6 +149,7 @@ async function past() {
   });
 }
 // END WORKING!
+*/
 
 // competition functions
 var competition = {
@@ -260,8 +281,8 @@ var compNames = fetch(url)
 
 // GET OUR COMPETITOR INFORMATION
         for (var i = 0; i < ourComp.competitors.length; i++) {
-          if (ourComp.competitors[i].name == competitor) {
-            console.log(competitor);
+          if (ourComp.competitors[i].name == competitorName) {
+            console.log(competitorName);
             var competitorID = ourComp.competitors[i].id;
             console.log(competitorID);
             return competitorID;
@@ -322,9 +343,9 @@ var competitionID = (comps) => {
 var competitorID = (competitionID) =>
   for(var i = 0; i < ourComp.competitors.length; i++)
   {
-    if(ourComp.competitors[i].name == competitor)
+    if(ourComp.competitors[i].name == competitorName)
     {
-      console.log(competitor);
+      console.log(competitorName);
       var competitorID = ourComp.competitors[i].id;
       console.log(competitorID);
       return competitorID;

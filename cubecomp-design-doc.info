@@ -18,6 +18,7 @@ it unfolds.
 
 To Do:
 Get List of competitions - Done
+When retrieving competitions, save results, check against that instead of continually calling remote (obviously special calls for live comps)
 Create "Find" function for competitions - DONE
        Competition searches should not have to be exact.  e.g. Big Old Competition should be found from 'big old' or 'big comp' -DONE
 Create "Find" function for competitors
@@ -29,5 +30,13 @@ Get Competition Status (e.g. what event, how far along, etc)
 
 Consider:
 present options if multiples are found, or make them be more precise?  (
-EXample, "open" search will yield many results)
-lis 
+Example, "open" search will yield many results)
+
+///////////////////
+// FUNCTION LIST //
+///////////////////
+Get Competition ID from Name Input
+Get Competitor ID from Name Input
+
+Get Current Competition Status
+Get Current Competitor Status
